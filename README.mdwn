@@ -125,8 +125,8 @@ HLedger bug
 But this fails in hledger:
 
     $ hledger -f ledger.lgr bal
-    creating default conversion rules file /home/anarcat/notes/tt-test/test.lgr.rules, edit this file for better results
-    hledger: "/home/anarcat/notes/tt-test/test.lgr" (line 1, column 1):
+    creating default conversion rules file /home/anarcat/src/ledger-timetracking/ledger.lgr.rules, edit this file for better results
+    hledger: "/home/anarcat/src/ledger-timetracking/ledger.lgr" (line 1, column 1):
     unexpected 'a'
     expecting journal transaction or directive or end of input
     1$ 
@@ -136,9 +136,9 @@ fixed in [commit a2b989d][]). But even using the regular `hledger`
 include fails:
 
     $ hledger -f hledger.lgr bal
-    using conversion rules file /home/anarcat/notes/tt-test/test.hlgr.rules
-    hledger: "/home/anarcat/notes/tt-test/test.hlgr" (line 2, column 1) in included file "test.timelog":
-    "/home/anarcat/notes/tt-test/test.timelog" (line 1, column 1):
+    using conversion rules file /home/anarcat/src/ledger-timetracking/ledger.hlgr.rules
+    hledger: "/home/anarcat/src/ledger-timetracking/ledger.hlgr" (line 2, column 1) in included file "timelog":
+    "/home/anarcat/src/ledger-timetracking/timelog" (line 1, column 1):
     unexpected 'i'
     expecting journal transaction or directive or end of input
     1$ 
