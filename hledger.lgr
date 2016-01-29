@@ -2,8 +2,8 @@ include timelog
 
 2016/01/28 test bill
     billable:client    -8h
-    revenues:work:client
+    income:client
 
 2016/01/28 conversion
-    revenues:work:client
+    income:client
     assets:receivables  8h @ 1€

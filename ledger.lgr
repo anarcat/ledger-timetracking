@@ -1,10 +1,10 @@
-apply account revenues
+apply account income
 include timelog
 end apply account
 
 
 2016/01/28 invoice #1
-    revenues:client  -10h @ 1€
+    income:client  -10h @ 1€
     assets:receivables  
 
 2016/02/15 payment for invoice #1

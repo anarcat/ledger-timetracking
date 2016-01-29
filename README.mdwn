@@ -20,7 +20,7 @@ The resulting looks like this:
 
     $ ledger -f ledger.lgr bal
                      10€  assets:cash
-                   1.00h  revenues:client
+                   1.00h  income:client
     --------------------
                    1.00h
                      10€
@@ -32,7 +32,7 @@ account. To ignore time entries, use the `--real` (`-R`) flag:
 
     $ ledger -f ledger.lgr bal -B -R
                      10€  assets:cash
-                    -10€  revenues:client
+                    -10€  income:client
     --------------------
                        0
 
@@ -45,7 +45,7 @@ bill. You can issue a bill against that extra hour to complete your
 billing with an entry like:
 
     2016/01/28 bill
-        revenues:client  -1h @ 1€
+        income:client  -1h @ 1€
         assets:receivables
 
 Then you see something like this:
@@ -65,7 +65,7 @@ unbalanced, but you can fix that with `-R`:
                      11€  assets
                      10€    cash
                       1€    receivables
-                    -11€  revenues:client
+                    -11€  income:client
     --------------------
                        0
 
@@ -110,9 +110,9 @@ Unbalanced entries
 
 The way transactions are imported, above, makes time entries show up
 as unbalanced. It's confusing and annoying - there should be a way to
-balance them with the right account, maybe the `revenues` account.
+balance them with the right account, maybe the `income` account.
 
-But then that would mean the `revenues` account would empty when we
+But then that would mean the `income` account would empty when we
 bill, which is not correct: it should be debited with the size of the
 bill, so that we have the running expenses showing up in balance
 reports.
