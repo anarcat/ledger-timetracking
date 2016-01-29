@@ -1,22 +1,32 @@
-How to plug time entries into (h)ledger
+Timetracking and billing with (h)ledger
 =======================================
 
-This set of sample files shows how to organize timetracking with tools
-like [ledgercli][] and [hledger][].
+This set of sample files shows how to organize timetracking and
+billing with tools like [ledgercli][] and [hledger][].
 
-The [ledger file](ledger.lgr) file includes a [timelog](timelog). The
-timelog is separate to make interaction with other tools,
-e.g. `timeclock.el` or, in my case, [org-mode][]'s "clock" system with
-[John Wiegley's org2tc script][] to export the clock entry to the
-`timeclock` format.
+ [ledgercli]: http://ledger-cli.org
+ [hledger]: http://hledger.org/
 
+The [ledger file](ledger.lgr) file includes a [timelog](timelog).
 The ledger file also includes transactions to issue a bill with the
 timelog entries and receive a payment against the bill.
+
+The timelog is separate to make interaction with time tracking tools.
+For example, `timeclock.el` can generate such a file, usually in
+`~/.timelog`. In my case, I use [org-mode][]'s [clocking work time][]
+system to "punch" in and out of different tasks. I then use
+[John Wiegley's org2tc script][] to export the clock entry to the
+`timeclock` format. (Also note that I have
+[made a few improvements to org2tc][] that you might be interested
+in.)
+
+ [clocking work time]: http://orgmode.org/manual/Clocking-work-time.html
+ [made a few improvements to org2tc]: https://github.com/jwiegley/org2tc/pull/1
 
 Looking at past entries
 -----------------------
 
-The resulting looks like this:
+The resulting ledger balance looks like this:
 
     $ ledger -f ledger.lgr bal
                      10€  assets:cash
@@ -26,8 +36,8 @@ The resulting looks like this:
                      10€
 
 You see we have `10€` in cash, which is about right. However, the
-ledger is unbalanced: there's a `10€` and a `1h` at the end... That is
-because the time entries are "virtual" and not balanced against any
+ledger is unbalanced: there's a `10€` and a `1h` that are not matched. That is
+because the time entries are "virtual" and so entered only against one
 account. To ignore time entries, use the `--real` (`-R`) flag:
 
     $ ledger -f ledger.lgr bal -B -R
@@ -35,6 +45,18 @@ account. To ignore time entries, use the `--real` (`-R`) flag:
                     -10€  income:client
     --------------------
                        0
+
+Now our ledger is properly balanced. The downside is that we don't see
+the `1h` that still has to be billed. Also notice how we need to
+convert the units with `--basis` (`-B`) otherwise it will show up like
+this, which is expected given the different units:
+
+    $ ledger -f ledger.lgr bal -R
+                     10€  assets:cash
+                 -10.00h  income:client
+    --------------------
+                 -10.00h
+                     10€
 
 Billing new entries
 -------------------
@@ -57,9 +79,8 @@ Then you see something like this:
     --------------------
                      11€
 
-
-ie. congratulations, you billed all your hours. It is still
-unbalanced, but you can fix that with `-R`:
+Congratulations, you billed all your hours! It is still
+unbalanced, but you can fix that with `-R`, as we did before:
 
     $ ledger -f ledger.lgr bal -B -R
                      11€  assets
@@ -70,7 +91,7 @@ unbalanced, but you can fix that with `-R`:
                        0
 
 Notice how this shows a 1€ unpaid bill that we are waiting a payment
-for, which is expected because we only issued the bill.
+for, which is expected because we only issued the bill and not the payment.
 
 Generating actual invoices
 --------------------------
