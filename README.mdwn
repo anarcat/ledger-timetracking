@@ -72,8 +72,38 @@ unbalanced, but you can fix that with `-R`:
 Notice how this shows a 1€ unpaid bill that we are waiting a payment
 for, which is expected because we only issued the bill.
 
+Generating actual invoices
+--------------------------
+
+The is the part I am stuck at. I have tried to make a
+[shell script](print_bill.sh) to generate a bill, but I can't figure
+out how to extract the hourly rate. I'd also love to get the details
+of the affected punches, but I don't think there's a way to map
+transactions like this in ledger. I *could* extract only the uncleared
+punches, set the invoice then clear them, but this would be
+overwritten at the next run of `org2tc`.
+
+I have even tried to set a commodity price, inspired by
+[adams rate example][]:
+
+    P 2016/01/28 00:00:00 h 1€
+
+But that didn't seem to actually work: the price doesn't apply. But I
+am not very familiar with this part of ledger.
+
+I have also tried using the [Python API][] but failed to go very far:
+i could not extract cost there either.
+
+ [Python API]: http://ledger-cli.org/3.0/doc/ledger3.html#Extending-with-Python
+ [adams rate example]: http://bazaar.launchpad.net/~rladams/+junk/LedgerInvoicingExample/view/head:/Rates.dat
+
 Issues
 ======
+
+Printing invoices
+-----------------
+
+I want to print invoices. More todos above and in the shell script.
 
 Unbalanced entries
 ------------------
