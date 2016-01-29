@@ -7,5 +7,5 @@ end apply account
     assets:receivables  
 
 2016/02/15 payment
-    assets:receivables     -15$CAD @ 0.66€
-    assets:cash
+    assets:receivables
+    assets:cash  10€
