@@ -1,4 +1,4 @@
-apply account revenues:client
+apply account revenues
 include test.timelog
 end apply account
 

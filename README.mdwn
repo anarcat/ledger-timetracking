@@ -7,13 +7,12 @@ e.g. `timeclock.el` or, in my case, [org-mode][]'s "clock" system with
 
 This works in ledger-cli:
 
-    $ ledger -f test.lgr bal
-                   8.00h  assets:receivables
-                   8.00h
-                     €-8  revenues:work:client
+    $ ledger -f test.lgr bal -B
+                     €10  assets:cash
+                  10.00h
+                    €-10  revenues:client
     --------------------
-                  16.00h
-                     €-8
+                  10.00h
 
 But fails in hledger:
 
