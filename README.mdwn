@@ -7,7 +7,8 @@ like [ledgercli][] and [hledger][].
 The [ledger file](ledger.lgr) file includes a [timelog](timelog). The
 timelog is separate to make interaction with other tools,
 e.g. `timeclock.el` or, in my case, [org-mode][]'s "clock" system with
-[John Wiegley's org2tc script][].
+[John Wiegley's org2tc script][] to export the clock entry to the
+`timeclock` format.
 
 The ledger file also includes transactions to issue a bill with the
 timelog entries and receive a payment against the bill.
@@ -117,4 +118,18 @@ that's rather painful: i'd like to keep that messy file separate from
 the main accounting.
 
 [org-mode]: http://orgmode.org
-[John Wiegley's org2tc script]: https://github.com/jwiegley/org2tc
+
+Sources and inspiration
+=======================
+
+ * [John Wiegley's org2tc script][]
+ * [Russel Adams' create invoice script][]
+ * [Simon Michael's transaction sample][]
+ * [Ledger-CLI timekeeping documentation][]
+ * [hledger timelog documentation][]
+
+ [John Wiegley's org2tc script]: https://github.com/jwiegley/org2tc
+ [Russel Adams' create invoice script]: http://bazaar.launchpad.net/~rladams/+junk/LedgerInvoicingExample/view/head:/CreateInvoice.sh
+ [Simon Michael's transaction sample]: https://gist.github.com/simonmichael/986a65106a9db1f8bd68
+ [Ledger-CLI timekeeping documentation]: http://ledger-cli.org/3.0/doc/ledger3.html#Time-Keeping
+ [hledger timelog documentation]: http://hledger.org/manual.html#timelog
