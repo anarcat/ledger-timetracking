@@ -1,0 +1,11 @@
+apply account billable
+include test.timelog
+end apply account
+
+2016/01/28 test bill
+    billable:client    8h
+    revenues:work:client
+
+2016/01/28 conversion
+    revenues:work:client
+    assets:receivables  8h @ 1€
