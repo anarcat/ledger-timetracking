@@ -1,35 +1,90 @@
 How to plug time entries into (h)ledger
 =======================================
 
-The [ledger file](ledger.lgr) file includes a [timelog](timelog). The
-ledger file issues a bill with the timelog entries and receives a
-payment against the bill.
+This set of sample files shows how to organize timetracking with tools
+like [ledgercli][] and [hledger][].
 
-The timelog is separate to make interaction with other tools,
+The [ledger file](ledger.lgr) file includes a [timelog](timelog). The
+timelog is separate to make interaction with other tools,
 e.g. `timeclock.el` or, in my case, [org-mode][]'s "clock" system with
 [John Wiegley's org2tc script][].
 
-It looks like this:
+The ledger file also includes transactions to issue a bill with the
+timelog entries and receive a payment against the bill.
+
+Looking at past entries
+-----------------------
+
+The resulting looks like this:
 
     $ ledger -f ledger.lgr bal
-                     €10  assets:cash
-                  10.00h
-                    €-10  revenues:client
+                     10€  assets:cash
+                   1.00h  revenues:client
     --------------------
-                  10.00h
+                   1.00h
+                     10€
 
-Notice how the ledger is unbalanced. But that's because the time
-entries are "virtual" and not balanced against any account. To ignore
-those, use:
+You see we have `10€` in cash, which is about right. However, the
+ledger is unbalanced: there's a `10€` and a `1h` at the end... That is
+because the time entries are "virtual" and not balanced against any
+account. To ignore time entries, use the `--real` (`-R`) flag:
 
-    $ ledger -f ledger.lgr bal -B --real
+    $ ledger -f ledger.lgr bal -B -R
                      10€  assets:cash
                     -10€  revenues:client
     --------------------
                        0
 
+Billing new entries
+-------------------
+
+To issue new bills, we will look at those unbalanced virtual entries.
+They allow you to notice there is another hour of client work to
+bill. You can issue a bill against that extra hour to complete your
+billing with an entry like:
+
+    2016/01/28 bill
+        revenues:client  -1h @ 1€
+        assets:receivables
+
+Then you see something like this:
+
+    $ ledger -f ledger.lgr bal
+                     11€  assets
+                     10€    cash
+                      1€    receivables
+    --------------------
+                     11€
+
+
+ie. congratulations, you billed all your hours. It is still
+unbalanced, but you can fix that with `-R`:
+
+    $ ledger -f ledger.lgr bal -B -R
+                     11€  assets
+                     10€    cash
+                      1€    receivables
+                    -11€  revenues:client
+    --------------------
+                       0
+
+
 Issues
 ======
+
+Unbalanced entries
+------------------
+
+The way transactions are imported, above, makes time entries show up
+as unbalanced. It's confusing and annoying - there should be a way to
+balance them with the right account, maybe the `revenues` account.
+
+But then that would mean the `revenues` account would empty when we
+bill, which is not correct: it should be debited with the size of the
+bill, so that we have the running expenses showing up in balance
+reports.
+
+So in fact, unbalanced entries may be exactly the point of this.
 
 HLedger bug
 -----------
