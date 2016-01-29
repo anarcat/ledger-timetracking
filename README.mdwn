@@ -136,8 +136,8 @@ fixed in [commit a2b989d][]). But even using the regular `hledger`
 include fails:
 
     $ hledger -f hledger.lgr bal
-    using conversion rules file /home/anarcat/src/ledger-timetracking/ledger.hlgr.rules
-    hledger: "/home/anarcat/src/ledger-timetracking/ledger.hlgr" (line 2, column 1) in included file "timelog":
+    using conversion rules file /home/anarcat/src/ledger-timetracking/hledger.lgr.rules
+    hledger: "/home/anarcat/src/ledger-timetracking/hledger.lgr" (line 2, column 1) in included file "timelog":
     "/home/anarcat/src/ledger-timetracking/timelog" (line 1, column 1):
     unexpected 'i'
     expecting journal transaction or directive or end of input
