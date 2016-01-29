@@ -1,5 +1,4 @@
-The [test.lgr](test.lgr) file shows a ledger file which includes a
-timelog, [test.timelog](test.timelog).
+The [ledger file](ledger.lgr) file includes a [timelog](timelog).
 
 The timelog is separate to make interaction with other tools,
 e.g. `timeclock.el` or, in my case, [org-mode][]'s "clock" system with
@@ -7,7 +6,7 @@ e.g. `timeclock.el` or, in my case, [org-mode][]'s "clock" system with
 
 This works in ledger-cli:
 
-    $ ledger -f test.lgr bal -B
+    $ ledger -f ledger.lgr bal -B
                      €10  assets:cash
                   10.00h
                     €-10  revenues:client
@@ -16,7 +15,7 @@ This works in ledger-cli:
 
 But fails in hledger:
 
-    $ hledger -f test.lgr bal
+    $ hledger -f ledger.lgr bal
     creating default conversion rules file /home/anarcat/notes/tt-test/test.lgr.rules, edit this file for better results
     hledger: "/home/anarcat/notes/tt-test/test.lgr" (line 1, column 1):
     unexpected 'a'
@@ -24,9 +23,9 @@ But fails in hledger:
     1$ 
 
 Of course, it chokes on the `apply account` directive from ledger. But
-even using the regular include fails:
+even using the regular `hledger` include fails:
 
-    $ hledger -f test.hlgr bal
+    $ hledger -f hledger.lgr bal
     using conversion rules file /home/anarcat/notes/tt-test/test.hlgr.rules
     hledger: "/home/anarcat/notes/tt-test/test.hlgr" (line 2, column 1) in included file "test.timelog":
     "/home/anarcat/notes/tt-test/test.timelog" (line 1, column 1):
@@ -34,9 +33,10 @@ even using the regular include fails:
     expecting journal transaction or directive or end of input
     1$ 
 
-I may be able to feed the timetracking data directly in hledger, but
+I may be able to feed the timetracking data directly in the
+`hledger.lgr` file, but
 that's rather painful: i'd like to keep that messy file separate from
-the main accounting. 
+the main accounting.
 
 [org-mode]: http://orgmode.org
 [John Wiegley's org2tc script]: https://github.com/jwiegley/org2tc

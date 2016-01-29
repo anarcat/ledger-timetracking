@@ -1,5 +1,5 @@
 apply account revenues
-include test.timelog
+include timelog
 end apply account
 
 2016/01/28 bill
