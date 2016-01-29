@@ -68,6 +68,8 @@ unbalanced, but you can fix that with `-R`:
     --------------------
                        0
 
+Notice how this shows a 1€ unpaid bill that we are waiting a payment
+for, which is expected because we only issued the bill.
 
 Issues
 ======
