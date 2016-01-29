@@ -1,19 +1,40 @@
-The [ledger file](ledger.lgr) file includes a [timelog](timelog).
+How to plug time entries into (h)ledger
+=======================================
+
+The [ledger file](ledger.lgr) file includes a [timelog](timelog). The
+ledger file issues a bill with the timelog entries and receives a
+payment against the bill.
 
 The timelog is separate to make interaction with other tools,
 e.g. `timeclock.el` or, in my case, [org-mode][]'s "clock" system with
 [John Wiegley's org2tc script][].
 
-This works in ledger-cli:
+It looks like this:
 
-    $ ledger -f ledger.lgr bal -B
+    $ ledger -f ledger.lgr bal
                      €10  assets:cash
                   10.00h
                     €-10  revenues:client
     --------------------
                   10.00h
 
-But fails in hledger:
+Notice how the ledger is unbalanced. But that's because the time
+entries are "virtual" and not balanced against any account. To ignore
+those, use:
+
+    $ ledger -f ledger.lgr bal -B --real
+                     10€  assets:cash
+                    -10€  revenues:client
+    --------------------
+                       0
+
+Issues
+======
+
+HLedger bug
+-----------
+
+But this fails in hledger:
 
     $ hledger -f ledger.lgr bal
     creating default conversion rules file /home/anarcat/notes/tt-test/test.lgr.rules, edit this file for better results
