@@ -129,7 +129,7 @@ I want to print invoices. More todos above and in the shell script.
 HLedger bug
 -----------
 
-But this fails in hledger:
+The ledger file fails to load in hledger:
 
     $ hledger -f ledger.lgr bal
     creating default conversion rules file /home/anarcat/src/ledger-timetracking/ledger.lgr.rules, edit this file for better results
