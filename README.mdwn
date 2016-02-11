@@ -126,6 +126,42 @@ Printing invoices
 
 I want to print invoices. More todos above and in the shell script.
 
+HLedger bug
+-----------
+
+But this fails in hledger:
+
+    $ hledger -f ledger.lgr bal
+    creating default conversion rules file /home/anarcat/src/ledger-timetracking/ledger.lgr.rules, edit this file for better results
+    hledger: "/home/anarcat/src/ledger-timetracking/ledger.lgr" (line 1, column 1):
+    unexpected 'a'
+    expecting journal transaction or directive or end of input
+    1$ 
+
+It first chokes on the `apply account` directive from ledger (this was
+fixed in [commit a2b989d][]). But even using the regular `hledger`
+include fails:
+
+    $ hledger -f hledger.lgr bal
+    using conversion rules file /home/anarcat/src/ledger-timetracking/hledger.lgr.rules
+    hledger: "/home/anarcat/src/ledger-timetracking/hledger.lgr" (line 2, column 1) in included file "timelog":
+    "/home/anarcat/src/ledger-timetracking/timelog" (line 1, column 1):
+    unexpected 'i'
+    expecting journal transaction or directive or end of input
+    1$ 
+
+This was filed as [issue #320][] in hledger.
+
+ [commit a2b989d]: https://github.com/simonmichael/hledger/commit/a2b989d898dec79a8ec1217dc238b75178cf6f39
+ [issue #320]: https://github.com/simonmichael/hledger/issues/320
+
+I may be able to feed the timetracking data directly in the
+`hledger.lgr` file, but
+that's rather painful: i'd like to keep that messy file separate from
+the main accounting.
+
+ [org-mode]: http://orgmode.org
+
 Unbalanced entries
 ------------------
 
@@ -193,42 +229,6 @@ Whereas the punch was after the given date:
     o 1970-02-01 13:00:00
 
 A month later!
-
-HLedger bug
------------
-
-But this fails in hledger:
-
-    $ hledger -f ledger.lgr bal
-    creating default conversion rules file /home/anarcat/src/ledger-timetracking/ledger.lgr.rules, edit this file for better results
-    hledger: "/home/anarcat/src/ledger-timetracking/ledger.lgr" (line 1, column 1):
-    unexpected 'a'
-    expecting journal transaction or directive or end of input
-    1$ 
-
-It first chokes on the `apply account` directive from ledger (this was
-fixed in [commit a2b989d][]). But even using the regular `hledger`
-include fails:
-
-    $ hledger -f hledger.lgr bal
-    using conversion rules file /home/anarcat/src/ledger-timetracking/hledger.lgr.rules
-    hledger: "/home/anarcat/src/ledger-timetracking/hledger.lgr" (line 2, column 1) in included file "timelog":
-    "/home/anarcat/src/ledger-timetracking/timelog" (line 1, column 1):
-    unexpected 'i'
-    expecting journal transaction or directive or end of input
-    1$ 
-
-This was filed as [issue #320][] in hledger.
-
- [commit a2b989d]: https://github.com/simonmichael/hledger/commit/a2b989d898dec79a8ec1217dc238b75178cf6f39
- [issue #320]: https://github.com/simonmichael/hledger/issues/320
-
-I may be able to feed the timetracking data directly in the
-`hledger.lgr` file, but
-that's rather painful: i'd like to keep that messy file separate from
-the main accounting.
-
-[org-mode]: http://orgmode.org
 
 Sources and inspiration
 =======================
