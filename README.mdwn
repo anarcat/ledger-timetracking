@@ -140,6 +140,29 @@ reports.
 
 So in fact, unbalanced entries may be exactly the point of this.
 
+Equity and reporting
+--------------------
+
+There's this strange error that happens when doing a monthly registry
+report:
+
+    $ ledger -f ledger.lgr reg -p monthly
+    Error: 'equity' cannot accept virtual and non-virtual postings to the same account
+
+This is not a problem when doing a daily report, as the invoice is
+(deliberately) sent the day after the time entries:
+
+    $ ledger -f ledger.lgr reg -p daily
+    70-Jan-01 - 70-Jan-01           (income:client)               9.99h        9.99h
+    70-Jan-02 - 70-Jan-02           assets:cash                     10€        9.99h
+                                                                                 10€
+                                    equity:volunteer              59.5m       10.98h
+                                                                                 10€
+                                    income:client               -10.99h         -30s
+                                                                                 10€
+
+How can I work around that issue?
+
 HLedger bug
 -----------
 

@@ -3,10 +3,14 @@ include timelog
 end apply account
 
 
-2016/01/28 invoice #1
+1970/01/02 invoice #1
     income:client  -10h @ 1€
-    assets:receivables  
+    assets:receivables  10€
+    income:client  -1h
+    equity:volunteer  1h
+    income:client  30s
+    equity:volunteer
 
-2016/02/15 payment for invoice #1
+1970/01/02 payment for invoice #1
     assets:receivables
     assets:cash  10€
