@@ -163,6 +163,37 @@ This is not a problem when doing a daily report, as the invoice is
 
 How can I work around that issue?
 
+Balance assertions
+------------------
+
+If I understand this right, such an assertion should check that, *at
+the given time*, the balance on the account is a given amount:
+
+    1970/01/02 assert we have billed everything
+        [income:client]  = 0s
+
+In the above case, there should be zero seconds to be billed to the
+client on January 2nd. Unfortunately, this doesn't work: if there are
+punches *after* that date, they still count towards that balance:
+
+    $ ledger -f ledger.lgr bal
+    While parsing file "/home/anarcat/src/ledger-timetracking/ledger.lgr", line 19:
+    While balancing transaction from "/home/anarcat/src/ledger-timetracking/ledger.lgr", lines 18-19:
+    > 1970/01/02 assert we have billed everything
+    >     [income:client]  = 0s
+    Unbalanced remainder is:
+                  -3600s
+    Amount to balance against:
+                       0
+    Error: Transaction does not balance
+
+Whereas the punch was after the given date:
+
+    i 1970-02-01 12:00:00 client  client:test4 1h
+    o 1970-02-01 13:00:00
+
+A month later!
+
 HLedger bug
 -----------
 
